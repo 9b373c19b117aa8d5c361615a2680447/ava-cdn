@@ -1,0 +1,7 @@
+# Sample File
+
+This is a sample text file served by Ava CDN.
+
+You can download this file and others from the CDN server!
+
+Dosyalar buradan gidiyor istersen indir kardeşim sıkıntı yok!
