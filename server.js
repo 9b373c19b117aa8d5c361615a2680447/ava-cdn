@@ -61,15 +61,18 @@ app.get('/api/files', (req, res) => {
     return res.json({ files: [] });
   }
 
-  fs.readdir(publicDir, (err, files) => {
+  fs.readdir(publicDir, { withFileTypes: true }, (err, entries) => {
     if (err) {
       return res.status(500).json({ error: 'Unable to read files' });
     }
     
-    const fileList = files.map(file => ({
-      name: file,
-      url: `/files/${file}`
-    }));
+    // Filter to only include regular files and exclude hidden files
+    const fileList = entries
+      .filter(entry => entry.isFile() && !entry.name.startsWith('.'))
+      .map(entry => ({
+        name: entry.name,
+        url: `/files/${encodeURIComponent(entry.name)}`
+      }));
     
     res.json({ files: fileList });
   });
